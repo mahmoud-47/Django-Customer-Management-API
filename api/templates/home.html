@@ -1,0 +1,74 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <title>CRUD</title>
+</head>
+<body>
+    <div class="container-fluid intro">
+
+        <div class="text-center">
+            <h4 class="title">Gestion Client (CRUD)</h4>
+        </div>
+
+        <div class="space"></div>
+    
+        <div class="row">
+            <div class="col-md-6">
+                <form method="get">
+                    <input type="text" name="search" class="myinp" placeholder="Rechercher...">
+                </form>
+            </div>
+            <div class="col-md-3"></div>
+            <div class="col-md-3">
+                <a href="{% url 'add' %}" class="btn btn-success addbtn">Ajouter Client</a>
+            </div>
+        </div>
+        {% if msg_content %}
+        <div class="alert alert-{{msg_type}}">
+            {{msg_content}}
+        </div>
+        {% endif %}
+        <br>
+        <div class="row">
+            <div class="col-md-12" style="overflow-x:auto;">
+                <table class="tab">
+                  <thead>
+                    <tr>
+                      <th class="colt right1"><input type="checkbox"> Nom</th>
+                      <th class="colt right1"><input type="checkbox"> Email</th>
+                      <th class="colt right2"><input type="checkbox"> Phone</th>
+                      <th class="colt right1"><input type="checkbox"> Status</th>
+                      <th class="colt right1"> Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    
+                    {% for client in clients %}
+                    <tr>
+                        <td class="right1"><input type="checkbox"> {{client.nom}}</td>
+                        <td class="right1"><input type="checkbox"> {{client.email}}</td>
+                        <td class="right2"><input type="checkbox"> {{client.phone}}</td>
+                        <td class="right1"><input type="checkbox">
+                        {% if client.status %}Actif{% else %}Inactif{% endif %}
+                        </td>
+                        <td class="right1">
+                            <a href="{% url 'edit' client.id %}" class="lien">Modifier</a> | 
+                            <a href="{% url 'delete' client.id %}" class="lien" onclick="return confirm('Voulez vous supprimer {{client.nom}} ?')">Supprimer</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                                       
+                  </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    
+</body>
+</html>

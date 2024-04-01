@@ -1,0 +1,54 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <title>Edit User</title>
+</head>
+<body>
+    <div class="container-fluid intro">
+
+        <div class="text-center">
+            <h4 class="title">Modifier un client</h4>
+        </div>
+        <a href="{% url 'home' %}" style="float:right">Dashboard</a>
+        <div class="space"></div>
+        
+        {% if msg_content %}
+        <div class="alert alert-{{msg_type}}">
+            {{msg_content}}
+        </div>
+        {% endif %}
+            
+        
+        <div class="row">
+            <form class="form-control p-5" method="post">
+                {% csrf_token %}
+                <div class="form-group mb-3">
+                  <label for="nom">Nom du client</label>
+                  <input type="text" value="{{client.nom}}" name="nom" class="form-control" id="nom" placeholder="Nom du client">
+                </div>
+                <div class="form-group mb-3">
+                  <label for="email">Email du client</label>
+                  <input type="text" value="{{client.email}}" name="email" class="form-control" id="email" placeholder="Email du client">
+                </div>
+                <div class="form-group mb-3">
+                    <label for="phone">Numero du client</label>
+                    <input type="text" value="{{client.phone}}" name="phone" class="form-control" id="phone" placeholder="Numéro du client">
+                </div>
+                <div class="form-group mb-3">
+                    <label for="status">Status </label>
+                    <input type="checkbox" name="status" id="status" {% if client.status == 1 %}checked{% endif %}>
+                </div>
+                <input type="submit" value="Modifier" class="btn btn-info">
+              </form>
+        </div>
+
+    </div>
+    
+</body>
+</html>
